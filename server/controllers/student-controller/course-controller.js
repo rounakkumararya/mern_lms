@@ -97,12 +97,24 @@ const checkCoursePurchaseInfo = async (req, res) => {
       userId: studentId,
     });
 
-    const ifStudentAlreadyBoughtCurrentCourse =
-      studentCourses.courses.findIndex((item) => item.courseId === id) > -1;
-    res.status(200).json({
-      success: true,
-      data: ifStudentAlreadyBoughtCurrentCourse,
-    });
+    if (!studentCourses) {
+      const newUserCourse = new StudentCourses({
+        userId: studentId,
+        coursers: [{}],
+      });
+
+      await newUserCourse.save();
+      res.status(200).json({
+        success: true,
+      });
+    } else {
+      const ifStudentAlreadyBoughtCurrentCourse =
+        studentCourses.courses.findIndex((item) => item.courseId === id) > -1;
+      res.status(200).json({
+        success: true,
+        data: ifStudentAlreadyBoughtCurrentCourse,
+      });
+    }
   } catch (e) {
     res.status(500).json({
       success: false,
