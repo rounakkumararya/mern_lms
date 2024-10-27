@@ -22,6 +22,15 @@ export async function loginService(formData) {
   }
 }
 
+export async function googleSignUp(formData) {
+  try {
+    const { data } = await axiosInstance.post("/auth/google", formData);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function checkAuthService() {
   const { data } = await axiosInstance.get("/auth/check-auth");
 

@@ -1,3 +1,4 @@
+import OAuth from "../OAuth";
 import { Button } from "../ui/button";
 import FormControls from "./form-controls";
 
@@ -20,6 +21,7 @@ function CommonForm({
       <Button disabled={isButtonDisabled} type="submit" className="mt-5 w-full">
         {buttonText || "Submit"}
       </Button>
+      <OAuth />
     </form>
   );
 }
