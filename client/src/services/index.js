@@ -24,7 +24,23 @@ export async function loginService(formData) {
 
 export async function googleSignUp(formData) {
   try {
-    const { data } = await axiosInstance.post("/auth/google", formData);
+    const { data } = await axiosInstance.post(
+      "/auth/google/signup",
+      {
+        name: formData.user.displayName,
+        email: formData.user.email,
+        googlePhotoUrl: formData.user.photoURL,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function googleSignIn(formData) {
+  try {
+    const { data } = await axiosInstance.post("/auth/google/signin", formData);
     return data;
   } catch (error) {
     console.log(error);

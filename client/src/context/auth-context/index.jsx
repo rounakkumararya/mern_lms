@@ -1,6 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData, initialSignUpFormData } from "@/config";
-import { checkAuthService, loginService, registerService } from "@/services";
+import {
+  checkAuthService,
+  googleSignUp,
+  loginService,
+  registerService,
+} from "@/services";
 import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext(null);
@@ -77,6 +82,38 @@ export default function AuthProvider({ children }) {
     }
   }
 
+  //google auth
+  async function handleGoogleSignUp(event) {
+    event.preventDefault();
+    try {
+      setAuthLoading(true);
+      setErrorMessage(null);
+      const data = await googleSignUp(signUpFormData);
+      setAuthLoading(false);
+      console.log(data.message);
+      setSignUpFormData(initialSignUpFormData);
+      setSignInFormData(initialSignInFormData);
+      return setErrorMessage(data.message);
+    } catch (error) {
+      setAuthLoading(false);
+      setSignUpFormData(initialSignUpFormData);
+      setSignInFormData(initialSignInFormData);
+      setErrorMessage(error.message);
+    }
+  }
+
+  async function handleGoogleSignIn(event) {
+    event.preventDefault();
+    try {
+      setAuthLoading(true);
+      setErrorMessage(null);
+    } catch (error) {
+      setAuthLoading(false);
+      setErrorMessage(error.message);
+      console.error(error);
+    }
+  }
+
   //check auth user
 
   async function checkAuthUser() {
@@ -131,6 +168,8 @@ export default function AuthProvider({ children }) {
         setSignUpFormData,
         handleRegisterUser,
         handleLoginUser,
+        handleGoogleSignIn,
+        handleGoogleSignUp,
         auth,
         resetCredentials,
         authLoading,

@@ -1,4 +1,5 @@
 import CommonForm from "@/components/common-form";
+import OAuth from "@/components/OAuth";
 import { StudentViewCommonFooter } from "@/components/student-view/footer";
 import {
   Card,
@@ -23,6 +24,8 @@ function AuthPage() {
     signUpFormData,
     setSignUpFormData,
     handleRegisterUser,
+    handleGoogleSignIn,
+    handleGoogleSignUp,
     handleLoginUser,
     authLoading,
     errorMessage,
@@ -95,6 +98,7 @@ function AuthPage() {
                         isButtonDisabled={!checkIfSignInFormIsValid()}
                         handleSubmit={handleLoginUser}
                       />
+                      <OAuth handleSubmit={handleGoogleSignIn} />
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -115,6 +119,7 @@ function AuthPage() {
                         isButtonDisabled={!checkIfSignUpFormIsValid()}
                         handleSubmit={handleRegisterUser}
                       />
+                      <OAuth handleSubmit={handleGoogleSignUp} />
                     </CardContent>
                   </Card>
                 </TabsContent>
